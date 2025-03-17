@@ -1,35 +1,32 @@
-package com.efsaplicativos.spring_boot_course_basic.entities;
+package com.efsaplicativos.spring_boot_course_basic.dtos;
 
-import jakarta.persistence.*;
+import com.efsaplicativos.spring_boot_course_basic.entities.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+public class UserDto {
 
-@Entity
-@Table(name = "tb_user")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String phone;
     private String password;
 
-    @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
-
-    public User() {
+    public UserDto() {
     }
 
-    public User(Long id, String name, String email, String phone, String password) {
+    public UserDto(Long id, String name, String email, String phone, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
+    }
+
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.password = user.getPassword();
     }
 
     public Long getId() {
@@ -70,22 +67,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }
